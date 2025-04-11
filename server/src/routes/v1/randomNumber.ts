@@ -8,8 +8,8 @@ const router = Router();
  * @access  Public
  */
 router.get('/', (req: Request, res: Response) => {
-  // const randomNumber = Math.floor(Math.random() * 100) + 1;
-  const randomNumber = 14;
+  const randomNumber = Math.floor(Math.random() * 100) + 1;
+  // const randomNumber = 14;
   res.json({ randomNumber });
 });
 

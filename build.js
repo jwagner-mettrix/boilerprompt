@@ -94,7 +94,7 @@ async function build() {
     console.log(`Output available in: ${outDir}`);
     console.log(`To run the production server:`);
     console.log(`  cd ${path.relative(rootDir, outServerDir)}`);
-    console.log('  npm install --production');
+    console.log('  npm install --omit=dev');
     console.log('  node server.js');
     console.log('----------------------------------------');
 
