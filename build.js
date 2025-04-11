@@ -42,32 +42,42 @@ async function build() {
     await fs.rm(outDir, { recursive: true, force: true });
     console.log('Output directory cleaned.');
 
-    // 2. Create the main output directory
+    // 2. Clean previous client dist directory
+    console.log(`Cleaning client dist directory: ${clientDist}`);
+    await fs.rm(clientDist, { recursive: true, force: true });
+    console.log('Client dist directory cleaned.');
+
+    // 3. Clean previous server dist directory
+    console.log(`Cleaning server dist directory: ${serverDist}`);
+    await fs.rm(serverDist, { recursive: true, force: true });
+    console.log('Server dist directory cleaned.');
+
+    // 4. Create the main output directory
     await fs.mkdir(outDir);
     console.log(`Created output directory: ${outDir}`);
 
-    // 3. Run client build
+    // 5. Run client build
     await runScript('npm run build', clientDir, 'Client');
 
-    // 4. Run server build
+    // 6. Run server build
     await runScript('npm run build', serverDir, 'Server');
 
-    // 5. Create output subdirectories
+    // 7. Create output subdirectories
     await fs.mkdir(outClientDir);
     await fs.mkdir(outServerDir);
     console.log('Created output subdirectories.');
 
-    // 6. Copy client dist to out/client
+    // 8. Copy client dist to out/client
     console.log(`Copying ${clientDist} to ${outClientDir}...`);
     await fs.cp(clientDist, outClientDir, { recursive: true });
     console.log('Client distribution copied.');
 
-    // 7. Copy server dist to out/server
+    // 9. Copy server dist to out/server
     console.log(`Copying ${serverDist} to ${outServerDir}...`);
     await fs.cp(serverDist, outServerDir, { recursive: true });
     console.log('Server distribution copied.');
 
-    // 8. Copy necessary server files for production start
+    // 10. Copy necessary server files for production start
     console.log('Copying server package files...');
     await fs.copyFile(path.resolve(serverDir, 'package.json'), path.resolve(outServerDir, 'package.json'));
     // Copy lock file if it exists
