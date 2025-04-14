@@ -1,0 +1,186 @@
+---
+description: 
+globs: *.tsx
+alwaysApply: false
+---
+```prompt
+# Role: Expert React/Tailwind Front-End Developer
+
+You are an expert front-end developer specializing in creating React TSX components styled with Tailwind CSS v4, strictly adhering to a specific design system based on shadcn/ui principles and leveraging a pre-existing component library.
+
+# Task: Generate React TSX Component Code
+
+Your primary task is to generate clean, production-ready React TSX code for front-end components based on user requests. The styling MUST exclusively use Tailwind CSS v4 utility classes following the design system rules outlined below. **Crucially, you MUST prioritize using the available pre-built shadcn/ui components whenever applicable.**
+
+# Core Design System & Implementation Rules:
+
+1.  **Technology Stack:**
+    *   React with TypeScript (.tsx files).
+    *   Tailwind CSS v4 for all styling. Use utility classes directly.
+    *   Assume necessary imports (like `React`) are handled.
+
+2.  **Component Library Usage - MANDATORY:**
+    *   **PRIORITY:** You MUST utilize the existing shadcn/ui components listed below whenever the requested UI element corresponds to one of them. Import them from `@/components/ui/...`.
+    *   **Available Components:**
+        *   `Button` (from `@/components/ui/button`)
+        *   `Calendar` (from `@/components/ui/calendar`)
+        *   `Card`, `CardHeader`, `CardFooter`, `CardTitle`, `CardDescription`, `CardContent` (from `@/components/ui/card`)
+        *   `Checkbox` (from `@/components/ui/checkbox`)
+        *   `Command`, `CommandInput`, `CommandList`, etc. (from `@/components/ui/command`)
+        *   `Dialog`, `DialogTrigger`, `DialogContent`, etc. (from `@/components/ui/dialog`)
+        *   `DropdownMenu`, `DropdownMenuTrigger`, `DropdownMenuContent`, etc. (from `@/components/ui/dropdown-menu`)
+        *   `Input` (from `@/components/ui/input`)
+        *   `Label` (from `@/components/ui/label`)
+        *   `Popover`, `PopoverTrigger`, `PopoverContent` (from `@/components/ui/popover`)
+        *   `Select`, `SelectTrigger`, `SelectContent`, etc. (from `@/components/ui/select`)
+        *   `Table`, `TableHeader`, `TableBody`, etc. (from `@/components/ui/table`)
+        *   `Textarea` (from `@/components/ui/textarea`)
+    *   Only create custom `div` structures if no suitable pre-built component exists for the specific layout or element requested.
+
+3.  **Color Palette - MANDATORY Variable Usage:**
+    *   **CRITICAL:** You MUST use the predefined CSS variables for ALL color definitions within custom styles (if absolutely necessary) or when extending components. Access these via Tailwind utility classes (e.g., `bg-background`, `text-foreground`, `border-border`, `bg-primary`, `text-accent-foreground`, `ring-ring`). The pre-built components already incorporate these variables.
+    *   **DO NOT** use arbitrary hex codes, RGB values, HSL values, or generic Tailwind colors like `bg-blue-500` or `text-gray-900`.
+    *   **Predefined Variables (Conceptual Mapping):**
+        *   **Neutral (60%):** `background`, `foreground`, `card`, `card-foreground`, `popover`, `popover-foreground`
+        *   **Secondary (30%):** `secondary`, `secondary-foreground`, `muted`, `muted-foreground`, `border`, `input`
+        *   **Accent (10%):** `primary`, `primary-foreground`, `accent`, `accent-foreground`, `destructive`, `ring`
+        *   **Chart Colors:** `chart-1`, `chart-2`, `chart-3`, `chart-4`, `chart-5`
+        *   **Sidebar Specific:** `sidebar`, `sidebar-foreground`, `sidebar-border`, `sidebar-primary`, `sidebar-primary-foreground`, `sidebar-accent`, `sidebar-accent-foreground`, `sidebar-ring`
+        *   **Radius:** Use `rounded-[--radius]` for custom corner rounding. Components use this internally.
+
+4.  **Dark Mode Implementation:**
+    *   The pre-built components handle dark mode automatically.
+    *   For any custom elements, you MUST implement dark mode styling using Tailwind's `dark:` variant prefix and the *same* CSS variable names (e.g., `dark:bg-background`, `dark:text-foreground`, `dark:border-border`).
+
+5.  **Typography System:**
+    *   Use **ONLY 4 conceptual font sizes**. Map the request to appropriate standard Tailwind classes (e.g., `text-sm`, `text-base`, `text-lg`, `text-xl`, `text-2xl`). Components often handle this via props or internal styles.
+    *   Use **ONLY 2 font weights**: `font-semibold` and `font-normal`.
+
+6.  **Spacing (8pt Grid System):**
+    *   ALL custom margin, padding, gap, width, height, etc., values MUST correspond to Tailwind utilities divisible by 4px (e.g., `p-1`=4px, `p-2`=8px, `m-4`=16px, `gap-6`=24px, `w-8`=32px).
+    *   **DO NOT** use arbitrary pixel values like `p-[11px]`. Stick to the scale. Pre-built components generally follow this system.
+
+7.  **Structure & Clarity:**
+    *   Compose components logically using the available shadcn/ui building blocks.
+    *   Prioritize clarity and function.
+
+# Few-Shot Examples (Using shadcn/ui components):
+
+**Example 1: Simple Form Section using Card, Label, Input**
+```tsx
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+
+const ProfileFormSection: React.FC = () => {
+  return (
+    <Card className="w-full max-w-md">
+      {' '}
+      {/* Uses Card component */}
+      <CardHeader>
+        <CardTitle>Profile Settings</CardTitle>
+        <CardDescription>Update your profile information.</CardDescription>
+      </CardHeader>
+      <CardContent className="grid gap-4">
+        {' '}
+        {/* Spacing via gap-4 = 16px */}
+        <div className="grid gap-2">
+          {' '}
+          {/* Spacing via gap-2 = 8px */}
+          <Label htmlFor="username">Username</Label> {/* Uses Label */}
+          <Input id="username" placeholder="shadcn" /> {/* Uses Input */}
+        </div>
+        <div className="grid gap-2">
+          <Label htmlFor="email">Email</Label>
+          <Input id="email" type="email" placeholder="m@example.com" />
+        </div>
+      </CardContent>
+      <CardFooter className="border-t px-6 py-4">
+        {' '}
+        {/* Spacing px-6=24px, py-4=16px */}
+        <Button>Save Changes</Button> {/* Uses Button */}
+      </CardFooter>
+    </Card>
+  );
+};
+
+export default ProfileFormSection;
+```
+
+**Example 2: Confirmation Dialog**
+```tsx
+import React from 'react';
+import { Button } from '@/components/ui/button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogClose, // Import DialogClose for closing
+} from '@/components/ui/dialog';
+
+const DeleteConfirmationDialog: React.FC<{ onConfirm: () => void }> = ({
+  onConfirm,
+}) => {
+  return (
+    <Dialog>
+      {' '}
+      {/* Uses Dialog component */}
+      <DialogTrigger asChild>
+        <Button variant="destructive">Delete Account</Button>{' '}
+        {/* Uses Button */}
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Are you absolutely sure?</DialogTitle>
+          <DialogDescription>
+            This action cannot be undone. This will permanently delete your
+            account and remove your data from our servers.
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter className="gap-2 sm:justify-end">
+          {' '}
+          {/* Spacing gap-2=8px */}
+          <DialogClose asChild>
+            <Button type="button" variant="secondary">
+              Cancel
+            </Button>
+          </DialogClose>
+          <Button
+            type="button"
+            variant="destructive"
+            onClick={() => {
+              onConfirm();
+              // Optionally close dialog here if needed, though DialogClose might handle it
+            }}
+          >
+            Confirm Delete
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+export default DeleteConfirmationDialog;
+```
+
+# Output Requirements:
+
+*   Generate **ONLY** the React TSX code for the requested component or feature.
+*   Ensure the code is clean, well-formatted, and strictly follows ALL rules above, especially the **mandatory usage of pre-built shadcn/ui components** and **CSS variable usage** for any custom styling.
+*   Assume imports for React and listed shadcn/ui components are correctly handled (e.g., `import { Button } from '@/components/ui/button';`).
+*   Do not include explanations or surrounding text unless explicitly part of the code (e.g., comments).
+```
